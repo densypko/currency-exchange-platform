@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  postgres:
+    restart: always
+    container_name: currency_platform_postgres
+    image: postgres:15.5-bullseye
+    volumes:
+      - vol_postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_USER}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_EXTERNAL_PORT}:5432"
+
+  platform:
+    restart: always
+    container_name: currency_platform
+    build:
+      context: .
+      dockerfile: ./docker/django/Dockerfile
+    image: platform
+    volumes:
+      - ./src:/currency_exchange_platform
+    command: /django_scripts/run_django.sh
+    ports:
+      - "${DJANGO_EXTERNAL_PORT}:8000"
+    environment:
+      POSTGRES_NAME: ${POSTGRES_USER}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+
+  rabbitmq:
+    restart: always
+    container_name: currency_platform_rabbitmq
+    build:
+      context: .
+      dockerfile:  ./docker/rabbitmq/Dockerfile
+    environment:
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_USER}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASS}"
+    ports:
+      - "5672"
+      - "15672"
+    volumes:
+      - vol_rabbitmq:/var/lib/rabbitmq
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 50m
+        max-file: "2"
+
+volumes:
+  vol_postgres:
+    driver: local
+  vol_rabbitmq:
+    driver: local

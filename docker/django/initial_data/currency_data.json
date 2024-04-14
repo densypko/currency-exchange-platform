@@ -1,0 +1,38 @@
+[
+  {
+    "model": "currency_exchange.currency",
+    "pk": 1,
+    "fields": {
+      "name": "Euro",
+      "code": "EUR",
+      "symbol": "EUR"
+    }
+  },
+  {
+    "model": "currency_exchange.currency",
+    "pk": 2,
+    "fields": {
+      "name": "Swiss Franc",
+      "code": "CHF",
+      "symbol": "CHF"
+    }
+  },
+  {
+    "model": "currency_exchange.currency",
+    "pk": 3,
+    "fields": {
+      "name": "United States Dollar",
+      "code": "USD",
+      "symbol": "USD"
+    }
+  },
+  {
+    "model": "currency_exchange.currency",
+    "pk": 4,
+    "fields": {
+      "name": "British Pound Sterli",
+      "code": "GBP",
+      "symbol": "GBP"
+    }
+  }
+]
