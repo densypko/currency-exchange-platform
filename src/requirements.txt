@@ -4,11 +4,11 @@ Django==4.2.8
 djangorestframework==3.14.0
 drf-spectacular==0.27.1
 djangorestframework-simplejwt==5.3.1
+
 # BBDD
 psycopg2==2.9.9
 
 ## Libs
-# Integración de API y manejo de datos
 requests==2.31.0
 factory-boy==3.3.0
 
